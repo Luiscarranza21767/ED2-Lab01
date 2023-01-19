@@ -37,6 +37,7 @@
 
 #include "oscilador.h"
 #include "confpuertos.h"
+#include "setupADC.h"
 
 #define _XTAL_FREQ 1000000
 
@@ -56,9 +57,11 @@ void __interrupt() isr (void){
 
 void main(void) {
     configpuertos();
-    setupINTOSC(4);     // Oscilador a 1 MHz
+    setupINTOSC(6);     // Oscilador a 4 MHz
+    setup_ADC();
     cont = 0;
     while(1){
+        // Contador (PRELAB)
         if((cont == 1) & PORTBbits.RB7){ // Revisa que ya se haya soltado el 
             PORTC ++;                    // botón como antirrebote
             cont = 0;
@@ -67,6 +70,14 @@ void main(void) {
             PORTC --;
             cont = 0;
         }
+        
+        //ADC (LAB)
+        ADCON0bits.CHS = 0b0000;    // Canal analógico 0
+        __delay_us(100);
+        ADCON0bits.GO = 1;          // Iniciar la conversión ADC
+        while (ADCON0bits.GO == 1); // Revisa si ya terminó la conversión ADC
+        ADIF = 0;                   // Apaga la bandera del ADC
+        PORTD = ADRESH;
     
     }
 }

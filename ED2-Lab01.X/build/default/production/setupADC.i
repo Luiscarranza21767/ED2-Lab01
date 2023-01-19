@@ -1,4 +1,4 @@
-# 1 "confpuertos.c"
+# 1 "setupADC.c"
 # 1 "<built-in>" 1
 # 1 "<built-in>" 3
 # 288 "<built-in>" 3
@@ -6,15 +6,16 @@
 # 1 "<built-in>" 2
 # 1 "C:/Program Files/Microchip/MPLABX/v6.00/packs/Microchip/PIC16Fxxx_DFP/1.3.42/xc8\\pic\\include\\language_support.h" 1 3
 # 2 "<built-in>" 2
-# 1 "confpuertos.c" 2
+# 1 "setupADC.c" 2
 
 
 
 
 
 
-# 1 "./confpuertos.h" 1
-# 11 "./confpuertos.h"
+
+# 1 "./setupADC.h" 1
+# 13 "./setupADC.h"
 # 1 "C:/Program Files/Microchip/MPLABX/v6.00/packs/Microchip/PIC16Fxxx_DFP/1.3.42/xc8\\pic\\include\\xc.h" 1 3
 # 18 "C:/Program Files/Microchip/MPLABX/v6.00/packs/Microchip/PIC16Fxxx_DFP/1.3.42/xc8\\pic\\include\\xc.h" 3
 extern const char __xc8_OPTIM_SPEED;
@@ -2632,31 +2633,34 @@ extern __bank0 unsigned char __resetbits;
 extern __bank0 __bit __powerdown;
 extern __bank0 __bit __timeout;
 # 29 "C:/Program Files/Microchip/MPLABX/v6.00/packs/Microchip/PIC16Fxxx_DFP/1.3.42/xc8\\pic\\include\\xc.h" 2 3
-# 11 "./confpuertos.h" 2
+# 13 "./setupADC.h" 2
 
 # 1 "C:\\Program Files\\Microchip\\xc8\\v2.40\\pic\\include\\c90\\stdint.h" 1 3
-# 12 "./confpuertos.h" 2
+# 14 "./setupADC.h" 2
 
 
-void configpuertos(void);
-# 7 "confpuertos.c" 2
 
 
-void configpuertos(void){
-
-    TRISB = 0b11000000;
-    PORTB = 0b11000000;
-    INTCONbits.GIE = 1;
-    INTCONbits.RBIE = 1;
-    INTCONbits.RBIF = 0;
-    IOCB = 0b11000000;
-    WPUB = 0b11000000;
-    OPTION_REGbits.nRBPU = 0;
 
 
-    TRISC = 0;
-    PORTC = 0;
+void setup_ADC(void);
+# 8 "setupADC.c" 2
 
-    TRISD = 0;
-    PORTD = 0;
+
+
+void setup_ADC(void){
+    PORTAbits.RA0 = 0;
+    TRISAbits.TRISA0 = 1;
+    ANSELbits.ANS0 = 1;
+
+    ADCON0bits.ADCS1 = 0;
+    ADCON0bits.ADCS0 = 1;
+
+    ADCON1bits.VCFG1 = 0;
+    ADCON1bits.VCFG0 = 0;
+
+    ADCON1bits.ADFM = 0;
+
+    ADCON0bits.ADON = 1;
+    _delay((unsigned long)((100)*(1000000/4000000.0)));
 }

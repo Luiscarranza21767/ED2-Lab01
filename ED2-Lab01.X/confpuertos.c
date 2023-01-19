@@ -20,4 +20,7 @@ void configpuertos(void){
     //
     TRISC = 0;
     PORTC = 0;
+    
+    TRISD = 0;
+    PORTD = 0;
 }

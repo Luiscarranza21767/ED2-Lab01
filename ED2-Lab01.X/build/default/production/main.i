@@ -2676,6 +2676,19 @@ void setupINTOSC(uint8_t IRCF);
 void configpuertos(void);
 # 39 "main.c" 2
 
+# 1 "./setupADC.h" 1
+# 14 "./setupADC.h"
+# 1 "C:\\Program Files\\Microchip\\xc8\\v2.40\\pic\\include\\c90\\stdint.h" 1 3
+# 14 "./setupADC.h" 2
+
+
+
+
+
+
+void setup_ADC(void);
+# 40 "main.c" 2
+
 
 
 
@@ -2695,9 +2708,11 @@ void __attribute__((picinterrupt(("")))) isr (void){
 
 void main(void) {
     configpuertos();
-    setupINTOSC(4);
+    setupINTOSC(6);
+    setup_ADC();
     cont = 0;
     while(1){
+
         if((cont == 1) & PORTBbits.RB7){
             PORTC ++;
             cont = 0;
@@ -2706,6 +2721,14 @@ void main(void) {
             PORTC --;
             cont = 0;
         }
+
+
+        ADCON0bits.CHS = 0b0000;
+        _delay((unsigned long)((100)*(1000000/4000000.0)));
+        ADCON0bits.GO = 1;
+        while (ADCON0bits.GO == 1);
+        ADIF = 0;
+        PORTD = ADRESH;
 
     }
 }
