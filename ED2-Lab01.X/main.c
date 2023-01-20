@@ -38,10 +38,17 @@
 #include "oscilador.h"
 #include "confpuertos.h"
 #include "setupADC.h"
+#include "setupTMR0.h"
 
-#define _XTAL_FREQ 1000000
-
+#define _XTAL_FREQ 4000000
+#define vTMR0 10
 int cont;
+int lecADC;
+int d1;
+int d2;
+
+int display(int disp);
+int convdisp(int valor);
 
 void __interrupt() isr (void){
     if(INTCONbits.RBIF){
@@ -53,13 +60,42 @@ void __interrupt() isr (void){
         }
         INTCONbits.RBIF = 0;
     }
+    if(PIR1bits.ADIF){
+        lecADC = ADRESH;
+        ADIF = 0;                   // Apaga la bandera del ADC
+    }
+    if(INTCONbits.T0IF){
+        
+        if(PORTEbits.RE0){
+            PORTD = display(2);
+            PORTEbits.RE0 = 0;
+            PORTEbits.RE1 = 1;
+        }
+        else {
+            PORTD = display(1);
+            PORTEbits.RE0 = 1;
+            PORTEbits.RE1 = 0;
+        }
+        
+        TMR0 = vTMR0;               // Carga el valor del timer
+        INTCONbits.T0IF = 0;
+        
+    }
 }
 
 void main(void) {
     configpuertos();
     setupINTOSC(6);     // Oscilador a 4 MHz
     setup_ADC();
+    setupTMR0(64, vTMR0);
     cont = 0;
+    
+    PORTEbits.RE0 = 1;
+    PORTEbits.RE1 = 0;
+    
+    ANSELbits.ANS5 = 0;
+    ANSELbits.ANS6 = 0;
+    
     while(1){
         // Contador (PRELAB)
         if((cont == 1) & PORTBbits.RB7){ // Revisa que ya se haya soltado el 
@@ -75,11 +111,73 @@ void main(void) {
         ADCON0bits.CHS = 0b0000;    // Canal analógico 0
         __delay_us(100);
         ADCON0bits.GO = 1;          // Iniciar la conversión ADC
-        while (ADCON0bits.GO == 1); // Revisa si ya terminó la conversión ADC
-        ADIF = 0;                   // Apaga la bandera del ADC
-        PORTD = ADRESH;
-    
+        
+        if(lecADC > PORTC){
+            PORTBbits.RB0 = 1;
+        }
+        else { 
+            PORTBbits.RB0 = 0;
+        }
+    }
+}
+int display(int disp){
+    if (disp == 1){
+        d1 = convdisp((lecADC & 0x0F));
+        return d1;
+    }
+    else if (disp == 2){
+        d2 = convdisp((lecADC & 0xF0) >> 4);
+        return d2;
     }
 }
 
-
+int convdisp(int valor){
+    if (valor == 0){
+        return 0b00111111;
+    }
+    else if(valor == 1){
+        return 0b00000110;
+    }
+    else if(valor == 2){
+        return 0b01011011;
+    }
+    else if(valor == 3){
+        return 0b01001111;
+    }
+    else if(valor == 4){
+        return 0b01100110;
+    }
+    else if(valor == 5){
+        return 0b01101101;
+    }
+    else if(valor == 6){
+        return 0b01111101;
+    }
+    else if(valor == 7){
+        return 0b00000111;
+    }
+    else if(valor == 8){
+        return 0b01111111;
+    }
+    else if(valor == 9){
+        return 0b01101111;
+    }
+    else if(valor == 10){
+        return 0b01110111;
+    }
+    else if(valor == 11){
+        return 0b01111100;
+    }
+    else if(valor == 12){
+        return 0b00111001;
+    }
+    else if(valor == 13){
+        return 0b01011110;
+    }
+    else if(valor == 14){
+        return 0b01111001;
+    }
+    else if(valor == 15){
+        return 0b01110001;
+    }
+}

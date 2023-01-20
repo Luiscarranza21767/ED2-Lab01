@@ -1,4 +1,4 @@
-# 1 "setupADC.c"
+# 1 "setupTMR0.c"
 # 1 "<built-in>" 1
 # 1 "<built-in>" 3
 # 288 "<built-in>" 3
@@ -6,7 +6,7 @@
 # 1 "<built-in>" 2
 # 1 "C:/Program Files/Microchip/MPLABX/v6.00/packs/Microchip/PIC16Fxxx_DFP/1.3.42/xc8\\pic\\include\\language_support.h" 1 3
 # 2 "<built-in>" 2
-# 1 "setupADC.c" 2
+# 1 "setupTMR0.c" 2
 
 
 
@@ -2644,27 +2644,41 @@ extern __bank0 __bit __timeout;
 
 
 void setup_ADC(void);
-# 8 "setupADC.c" 2
+# 8 "setupTMR0.c" 2
 
 
 
-void setup_ADC(void){
-    PORTAbits.RA0 = 0;
-    TRISAbits.TRISA0 = 1;
-    ANSELbits.ANS0 = 1;
+void setupTMR0(uint8_t PRES, uint8_t valTMR0){
+    INTCONbits.GIE = 1;
+    INTCONbits.T0IE = 1;
+    INTCONbits.T0IF = 0;
 
-    INTCONbits.PEIE = 1;
-    PIE1bits.ADIE = 1;
-    PIR1bits.ADIF = 0;
+    OPTION_REGbits.T0CS = 0;
+    OPTION_REGbits.PSA = 0;
+    if(PRES == 2){
+        OPTION_REGbits.PS = 0b000;
+    }
+    else if(PRES == 4){
+        OPTION_REGbits.PS = 0b001;
+    }
+    else if(PRES == 8){
+        OPTION_REGbits.PS = 0b010;
+    }
+    else if(PRES == 16){
+        OPTION_REGbits.PS = 0b011;
+    }
+    else if(PRES == 32){
+        OPTION_REGbits.PS = 0b100;
+    }
+    else if(PRES == 64){
+        OPTION_REGbits.PS = 0b101;
+    }
+    else if(PRES == 128){
+        OPTION_REGbits.PS = 0b110;
+    }
+    else if(PRES == 256){
+        OPTION_REGbits.PS = 0b111;
+    }
 
-    ADCON0bits.ADCS1 = 0;
-    ADCON0bits.ADCS0 = 1;
-
-    ADCON1bits.VCFG1 = 0;
-    ADCON1bits.VCFG0 = 0;
-
-    ADCON1bits.ADFM = 0;
-
-    ADCON0bits.ADON = 1;
-    _delay((unsigned long)((100)*(1000000/4000000.0)));
+    TMR0 = valTMR0;
 }

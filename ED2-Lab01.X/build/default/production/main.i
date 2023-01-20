@@ -2689,10 +2689,25 @@ void configpuertos(void);
 void setup_ADC(void);
 # 40 "main.c" 2
 
+# 1 "./setupTMR0.h" 1
+# 12 "./setupTMR0.h"
+# 1 "C:\\Program Files\\Microchip\\xc8\\v2.40\\pic\\include\\c90\\stdint.h" 1 3
+# 12 "./setupTMR0.h" 2
+
+
+void setupTMR0(uint8_t PRES, uint8_t valTMR0);
+# 41 "main.c" 2
+
 
 
 
 int cont;
+int lecADC;
+int d1;
+int d2;
+
+int display(int disp);
+int convdisp(int valor);
 
 void __attribute__((picinterrupt(("")))) isr (void){
     if(INTCONbits.RBIF){
@@ -2704,13 +2719,42 @@ void __attribute__((picinterrupt(("")))) isr (void){
         }
         INTCONbits.RBIF = 0;
     }
+    if(PIR1bits.ADIF){
+        lecADC = ADRESH;
+        ADIF = 0;
+    }
+    if(INTCONbits.T0IF){
+
+        if(PORTEbits.RE0){
+            PORTD = display(2);
+            PORTEbits.RE0 = 0;
+            PORTEbits.RE1 = 1;
+        }
+        else {
+            PORTD = display(1);
+            PORTEbits.RE0 = 1;
+            PORTEbits.RE1 = 0;
+        }
+
+        TMR0 = 10;
+        INTCONbits.T0IF = 0;
+
+    }
 }
 
 void main(void) {
     configpuertos();
     setupINTOSC(6);
     setup_ADC();
+    setupTMR0(64, 10);
     cont = 0;
+
+    PORTEbits.RE0 = 1;
+    PORTEbits.RE1 = 0;
+
+    ANSELbits.ANS5 = 0;
+    ANSELbits.ANS6 = 0;
+
     while(1){
 
         if((cont == 1) & PORTBbits.RB7){
@@ -2724,11 +2768,75 @@ void main(void) {
 
 
         ADCON0bits.CHS = 0b0000;
-        _delay((unsigned long)((100)*(1000000/4000000.0)));
+        _delay((unsigned long)((100)*(4000000/4000000.0)));
         ADCON0bits.GO = 1;
-        while (ADCON0bits.GO == 1);
-        ADIF = 0;
-        PORTD = ADRESH;
 
+        if(lecADC > PORTC){
+            PORTBbits.RB0 = 1;
+        }
+        else {
+            PORTBbits.RB0 = 0;
+        }
+    }
+}
+int display(int disp){
+    if (disp == 1){
+        d1 = convdisp((lecADC & 0x0F));
+        return d1;
+    }
+    else if (disp == 2){
+        d2 = convdisp((lecADC & 0xF0) >> 4);
+        return d2;
+    }
+}
+
+int convdisp(int valor){
+    if (valor == 0){
+        return 0b00111111;
+    }
+    else if(valor == 1){
+        return 0b00000110;
+    }
+    else if(valor == 2){
+        return 0b01011011;
+    }
+    else if(valor == 3){
+        return 0b01001111;
+    }
+    else if(valor == 4){
+        return 0b01100110;
+    }
+    else if(valor == 5){
+        return 0b01101101;
+    }
+    else if(valor == 6){
+        return 0b01111101;
+    }
+    else if(valor == 7){
+        return 0b00000111;
+    }
+    else if(valor == 8){
+        return 0b01111111;
+    }
+    else if(valor == 9){
+        return 0b01101111;
+    }
+    else if(valor == 10){
+        return 0b01110111;
+    }
+    else if(valor == 11){
+        return 0b01111100;
+    }
+    else if(valor == 12){
+        return 0b00111001;
+    }
+    else if(valor == 13){
+        return 0b01011110;
+    }
+    else if(valor == 14){
+        return 0b01111001;
+    }
+    else if(valor == 15){
+        return 0b01110001;
     }
 }

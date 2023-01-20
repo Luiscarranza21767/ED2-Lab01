@@ -2659,4 +2659,7 @@ void configpuertos(void){
 
     TRISD = 0;
     PORTD = 0;
+
+    TRISE = 0;
+    PORTE = 0;
 }

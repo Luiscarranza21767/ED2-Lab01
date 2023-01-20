@@ -13,6 +13,10 @@ void setup_ADC(void){
     TRISAbits.TRISA0 = 1;   // RA0 es entrada
     ANSELbits.ANS0 = 1;     // RA0 es analógico    
     
+    INTCONbits.PEIE = 1;
+    PIE1bits.ADIE = 1;      // Habilitar interrupción del ADC
+    PIR1bits.ADIF = 0;
+    
     ADCON0bits.ADCS1 = 0;
     ADCON0bits.ADCS0 = 1;   // Fosc/8
     
