@@ -1,4 +1,4 @@
-# 1 "main.c"
+# 1 "display.c"
 # 1 "<built-in>" 1
 # 1 "<built-in>" 3
 # 288 "<built-in>" 3
@@ -6,34 +6,16 @@
 # 1 "<built-in>" 2
 # 1 "C:/Program Files/Microchip/MPLABX/v6.00/packs/Microchip/PIC16Fxxx_DFP/1.3.42/xc8\\pic\\include\\language_support.h" 1 3
 # 2 "<built-in>" 2
-# 1 "main.c" 2
-# 11 "main.c"
-#pragma config FOSC = INTRC_NOCLKOUT
-
-#pragma config WDTE = OFF
-
-#pragma config PWRTE = OFF
-#pragma config MCLRE = OFF
-
-#pragma config CP = OFF
-
-#pragma config CPD = OFF
-
-#pragma config BOREN = OFF
-#pragma config IESO = OFF
-
-#pragma config FCMEN = OFF
-
-#pragma config LVP = OFF
+# 1 "display.c" 2
 
 
 
-#pragma config BOR4V = BOR40V
-
-#pragma config WRT = OFF
 
 
 
+
+# 1 "./display.h" 1
+# 11 "./display.h"
 # 1 "C:/Program Files/Microchip/MPLABX/v6.00/packs/Microchip/PIC16Fxxx_DFP/1.3.42/xc8\\pic\\include\\xc.h" 1 3
 # 18 "C:/Program Files/Microchip/MPLABX/v6.00/packs/Microchip/PIC16Fxxx_DFP/1.3.42/xc8\\pic\\include\\xc.h" 3
 extern const char __xc8_OPTIM_SPEED;
@@ -2651,137 +2633,78 @@ extern __bank0 unsigned char __resetbits;
 extern __bank0 __bit __powerdown;
 extern __bank0 __bit __timeout;
 # 29 "C:/Program Files/Microchip/MPLABX/v6.00/packs/Microchip/PIC16Fxxx_DFP/1.3.42/xc8\\pic\\include\\xc.h" 2 3
-# 36 "main.c" 2
+# 11 "./display.h" 2
 
-
-# 1 "./oscilador.h" 1
-# 14 "./oscilador.h"
-# 1 "C:\\Program Files\\Microchip\\xc8\\v2.40\\pic\\include\\c90\\stdint.h" 1 3
-# 14 "./oscilador.h" 2
-
-
-
-
-
-
-void setupINTOSC(uint8_t IRCF);
-# 38 "main.c" 2
-
-# 1 "./confpuertos.h" 1
-# 12 "./confpuertos.h"
-# 1 "C:\\Program Files\\Microchip\\xc8\\v2.40\\pic\\include\\c90\\stdint.h" 1 3
-# 12 "./confpuertos.h" 2
-
-
-void configpuertos(void);
-# 39 "main.c" 2
-
-# 1 "./setupADC.h" 1
-# 14 "./setupADC.h"
-# 1 "C:\\Program Files\\Microchip\\xc8\\v2.40\\pic\\include\\c90\\stdint.h" 1 3
-# 14 "./setupADC.h" 2
-
-
-
-
-
-
-void setup_ADC(void);
-# 40 "main.c" 2
-
-# 1 "./setupTMR0.h" 1
-# 12 "./setupTMR0.h"
-# 1 "C:\\Program Files\\Microchip\\xc8\\v2.40\\pic\\include\\c90\\stdint.h" 1 3
-# 12 "./setupTMR0.h" 2
-
-
-void setupTMR0(uint8_t PRES, uint8_t valTMR0);
-# 41 "main.c" 2
-
-# 1 "./display.h" 1
-# 12 "./display.h"
 # 1 "C:\\Program Files\\Microchip\\xc8\\v2.40\\pic\\include\\c90\\stdint.h" 1 3
 # 12 "./display.h" 2
 
 
 int display(int lecADC, int disp);
 int convdisp(int valor);
-# 42 "main.c" 2
+# 8 "display.c" 2
 
 
+int d1;
+int d2;
 
-
-int cont;
-int lecADC;
-
-
-void __attribute__((picinterrupt(("")))) isr (void){
-    if(INTCONbits.RBIF){
-        if(PORTBbits.RB7 == 0){
-            cont = 1;
-        }
-        if(PORTBbits.RB6 == 0){
-            cont = 2;
-        }
-        INTCONbits.RBIF = 0;
+int display(int lecADC, int disp){
+    if (disp == 1){
+        d1 = convdisp((lecADC & 0x0F));
+        return d1;
     }
-    if(PIR1bits.ADIF){
-        lecADC = ADRESH;
-        ADIF = 0;
-    }
-    if(INTCONbits.T0IF){
-
-        if(PORTEbits.RE0){
-            PORTD = display(lecADC, 2);
-            PORTEbits.RE0 = 0;
-            PORTEbits.RE1 = 1;
-        }
-        else {
-            PORTD = display(lecADC, 1);
-            PORTEbits.RE0 = 1;
-            PORTEbits.RE1 = 0;
-        }
-
-        TMR0 = 10;
-        INTCONbits.T0IF = 0;
-
+    else if (disp == 2){
+        d2 = convdisp((lecADC & 0xF0) >> 4);
+        return d2;
     }
 }
 
-void main(void) {
-    configpuertos();
-    setupINTOSC(6);
-    setup_ADC();
-    setupTMR0(64, 10);
-    cont = 0;
-
-    PORTEbits.RE0 = 1;
-    PORTEbits.RE1 = 0;
-
-    ANSELbits.ANS5 = 0;
-    ANSELbits.ANS6 = 0;
-
-    while(1){
-
-        if((cont == 1) & PORTBbits.RB7){
-            PORTC ++;
-            cont = 0;
-        }
-        if((cont == 2) & PORTBbits.RB6){
-            PORTC --;
-            cont = 0;
-        }
-
-
-        ADCON0bits.CHS = 0b0000;
-        _delay((unsigned long)((100)*(4000000/4000000.0)));
-        ADCON0bits.GO = 1;
-
-        if(lecADC > PORTC){
-            PORTBbits.RB0 = 1;
-        }
-        else {
-            PORTBbits.RB0 = 0;
-        }
+int convdisp(int valor){
+    if (valor == 0){
+        return 0b00111111;
+    }
+    else if(valor == 1){
+        return 0b00000110;
+    }
+    else if(valor == 2){
+        return 0b01011011;
+    }
+    else if(valor == 3){
+        return 0b01001111;
+    }
+    else if(valor == 4){
+        return 0b01100110;
+    }
+    else if(valor == 5){
+        return 0b01101101;
+    }
+    else if(valor == 6){
+        return 0b01111101;
+    }
+    else if(valor == 7){
+        return 0b00000111;
+    }
+    else if(valor == 8){
+        return 0b01111111;
+    }
+    else if(valor == 9){
+        return 0b01101111;
+    }
+    else if(valor == 10){
+        return 0b01110111;
+    }
+    else if(valor == 11){
+        return 0b01111100;
+    }
+    else if(valor == 12){
+        return 0b00111001;
+    }
+    else if(valor == 13){
+        return 0b01011110;
+    }
+    else if(valor == 14){
+        return 0b01111001;
+    }
+    else if(valor == 15){
+        return 0b01110001;
     }
 }

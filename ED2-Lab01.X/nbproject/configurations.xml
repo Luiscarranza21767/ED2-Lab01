@@ -8,6 +8,7 @@
       <itemPath>confpuertos.h</itemPath>
       <itemPath>setupADC.h</itemPath>
       <itemPath>setupTMR0.h</itemPath>
+      <itemPath>display.h</itemPath>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"
@@ -21,6 +22,7 @@
       <itemPath>confpuertos.c</itemPath>
       <itemPath>setupADC.c</itemPath>
       <itemPath>setupTMR0.c</itemPath>
+      <itemPath>display.c</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"

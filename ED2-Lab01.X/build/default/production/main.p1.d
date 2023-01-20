@@ -3,4 +3,5 @@ main.c  \
 oscilador.h  \
 confpuertos.h  \
 setupADC.h  \
-setupTMR0.h 
+setupTMR0.h  \
+display.h 
