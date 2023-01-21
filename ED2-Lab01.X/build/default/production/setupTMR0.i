@@ -2644,6 +2644,7 @@ extern __bank0 __bit __timeout;
 
 
 void setup_ADC(void);
+void iniciarADC(int channel);
 # 8 "setupTMR0.c" 2
 
 

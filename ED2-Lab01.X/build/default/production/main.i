@@ -2687,6 +2687,7 @@ void configpuertos(void);
 
 
 void setup_ADC(void);
+void iniciarADC(int channel);
 # 40 "main.c" 2
 
 # 1 "./setupTMR0.h" 1
@@ -2707,6 +2708,7 @@ void setupTMR0(uint8_t PRES, uint8_t valTMR0);
 int display(int lecADC, int disp);
 int convdisp(int valor);
 # 42 "main.c" 2
+
 
 
 
@@ -2773,9 +2775,8 @@ void main(void) {
         }
 
 
-        ADCON0bits.CHS = 0b0000;
-        _delay((unsigned long)((100)*(4000000/4000000.0)));
-        ADCON0bits.GO = 1;
+        iniciarADC(1);
+
 
         if(lecADC > PORTC){
             PORTBbits.RB0 = 1;

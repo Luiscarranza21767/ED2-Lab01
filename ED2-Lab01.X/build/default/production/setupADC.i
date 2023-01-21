@@ -2644,6 +2644,7 @@ extern __bank0 __bit __timeout;
 
 
 void setup_ADC(void);
+void iniciarADC(int channel);
 # 8 "setupADC.c" 2
 
 
@@ -2666,5 +2667,12 @@ void setup_ADC(void){
     ADCON1bits.ADFM = 0;
 
     ADCON0bits.ADON = 1;
-    _delay((unsigned long)((100)*(1000000/4000000.0)));
+    _delay((unsigned long)((100)*(4000000/4000000.0)));
+}
+void iniciarADC(int channel){
+    if(channel ==1){
+        ADCON0bits.CHS = 0b0000;
+        _delay((unsigned long)((100)*(4000000/4000000.0)));
+        ADCON0bits.GO = 1;
+    }
 }

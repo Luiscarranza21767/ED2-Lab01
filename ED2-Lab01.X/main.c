@@ -43,6 +43,7 @@
 
 #define _XTAL_FREQ 4000000
 #define vTMR0 10
+
 int cont;
 int lecADC;
 
@@ -105,9 +106,8 @@ void main(void) {
         }
         
         //ADC (LAB)
-        ADCON0bits.CHS = 0b0000;    // Canal analógico 0
-        __delay_us(100);
-        ADCON0bits.GO = 1;          // Iniciar la conversión ADC
+        iniciarADC(1);
+        
         
         if(lecADC > PORTC){
             PORTBbits.RB0 = 1;

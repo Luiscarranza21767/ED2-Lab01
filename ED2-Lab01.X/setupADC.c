@@ -6,7 +6,7 @@
  */
 
 #include "setupADC.h"
-#define _XTAL_FREQ 1000000
+#define _XTAL_FREQ 4000000
 
 void setup_ADC(void){
     PORTAbits.RA0 = 0;      // Inicia el bit 0 de PORTA en 0
@@ -27,4 +27,11 @@ void setup_ADC(void){
     
     ADCON0bits.ADON = 1;    // Habilitar el convertidor ADC
     __delay_us(100);
+}
+void iniciarADC(int channel){
+    if(channel ==1){
+        ADCON0bits.CHS = 0b0000;    // Canal analógico 0
+        __delay_us(100);
+        ADCON0bits.GO = 1;          // Iniciar la conversión ADC
+    }
 }

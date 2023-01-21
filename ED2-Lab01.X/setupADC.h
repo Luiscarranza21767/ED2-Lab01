@@ -18,6 +18,7 @@
 // TODO Insert declarations
 
 void setup_ADC(void);
+void iniciarADC(int channel);
 
 
 #endif	/* XC_HEADER_TEMPLATE_H */

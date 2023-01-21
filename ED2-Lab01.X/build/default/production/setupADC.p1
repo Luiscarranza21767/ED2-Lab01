@@ -384,9 +384,37 @@ Version 4.0 HI-TECH Software Intermediate Code
 [; ;setupADC.c: 28:     ADCON0bits.ADON = 1;
 [e = . . _ADCON0bits 0 0 -> -> 1 `i `uc ]
 "29
-[; ;setupADC.c: 29:     _delay((unsigned long)((100)*(1000000/4000000.0)));
-[e ( __delay (1 -> * -> -> 100 `i `d / -> -> 1000000 `l `d .4000000.0 `ul ]
+[; ;setupADC.c: 29:     _delay((unsigned long)((100)*(4000000/4000000.0)));
+[e ( __delay (1 -> * -> -> 100 `i `d / -> -> 4000000 `l `d .4000000.0 `ul ]
 "30
 [; ;setupADC.c: 30: }
 [e :UE 138 ]
+}
+"31
+[; ;setupADC.c: 31: void iniciarADC(int channel){
+[v _iniciarADC `(v ~T0 @X0 1 ef1`i ]
+{
+[e :U _iniciarADC ]
+[v _channel `i ~T0 @X0 1 r1 ]
+[f ]
+"32
+[; ;setupADC.c: 32:     if(channel ==1){
+[e $ ! == _channel -> 1 `i 140  ]
+{
+"33
+[; ;setupADC.c: 33:         ADCON0bits.CHS = 0b0000;
+[e = . . _ADCON0bits 0 2 -> -> 0 `i `uc ]
+"34
+[; ;setupADC.c: 34:         _delay((unsigned long)((100)*(4000000/4000000.0)));
+[e ( __delay (1 -> * -> -> 100 `i `d / -> -> 4000000 `l `d .4000000.0 `ul ]
+"35
+[; ;setupADC.c: 35:         ADCON0bits.GO = 1;
+[e = . . _ADCON0bits 1 1 -> -> 1 `i `uc ]
+"36
+[; ;setupADC.c: 36:     }
+}
+[e :U 140 ]
+"37
+[; ;setupADC.c: 37: }
+[e :UE 139 ]
 }

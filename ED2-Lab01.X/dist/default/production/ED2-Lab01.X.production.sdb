@@ -17,19 +17,21 @@
 [v _display display `(i  1 e 2 0 ]
 "24
 [v _convdisp convdisp `(i  1 e 2 0 ]
-"50 D:\Backup\Documentos\GitHub\ED2-Lab01\ED2-Lab01.X\main.c
+"51 D:\Backup\Documentos\GitHub\ED2-Lab01\ED2-Lab01.X\main.c
 [v _isr isr `II(v  1 e 1 0 ]
-"83
+"84
 [v _main main `(v  1 e 1 0 ]
 "10 D:\Backup\Documentos\GitHub\ED2-Lab01\ED2-Lab01.X\oscilador.c
 [v _setupINTOSC setupINTOSC `(v  1 e 1 0 ]
 "11 D:\Backup\Documentos\GitHub\ED2-Lab01\ED2-Lab01.X\setupADC.c
 [v _setup_ADC setup_ADC `(v  1 e 1 0 ]
+"31
+[v _iniciarADC iniciarADC `(v  1 e 1 0 ]
 "11 D:\Backup\Documentos\GitHub\ED2-Lab01\ED2-Lab01.X\setupTMR0.c
 [v _setupTMR0 setupTMR0 `(v  1 e 1 0 ]
 "60 C:/Program Files/Microchip/MPLABX/v6.00/packs/Microchip/PIC16Fxxx_DFP/1.3.42/xc8\pic\include\proc\pic16f887.h
 [v _TMR0 TMR0 `VEuc  1 e 1 @1 ]
-[s S363 . 1 `uc 1 RA0 1 0 :1:0 
+[s S304 . 1 `uc 1 RA0 1 0 :1:0 
 `uc 1 RA1 1 0 :1:1 
 `uc 1 RA2 1 0 :1:2 
 `uc 1 RA3 1 0 :1:3 
@@ -39,8 +41,8 @@
 `uc 1 RA7 1 0 :1:7 
 ]
 "184
-[u S372 . 1 `S363 1 . 1 0 ]
-[v _PORTAbits PORTAbits `VES372  1 e 1 @5 ]
+[u S313 . 1 `S304 1 . 1 0 ]
+[v _PORTAbits PORTAbits `VES313  1 e 1 @5 ]
 "229
 [v _PORTB PORTB `VEuc  1 e 1 @6 ]
 [s S54 . 1 `uc 1 RB0 1 0 :1:0 
@@ -99,13 +101,13 @@
 [v _PIR1bits PIR1bits `VES83  1 e 1 @12 ]
 "1239
 [v _ADRESH ADRESH `VEuc  1 e 1 @30 ]
-[s S158 . 1 `uc 1 ADON 1 0 :1:0 
+[s S406 . 1 `uc 1 ADON 1 0 :1:0 
 `uc 1 GO_nDONE 1 0 :1:1 
 `uc 1 CHS 1 0 :4:2 
 `uc 1 ADCS 1 0 :2:6 
 ]
 "1277
-[s S163 . 1 `uc 1 . 1 0 :1:0 
+[s S411 . 1 `uc 1 . 1 0 :1:0 
 `uc 1 GO 1 0 :1:1 
 `uc 1 CHS0 1 0 :1:2 
 `uc 1 CHS1 1 0 :1:3 
@@ -114,15 +116,15 @@
 `uc 1 ADCS0 1 0 :1:6 
 `uc 1 ADCS1 1 0 :1:7 
 ]
-[s S172 . 1 `uc 1 . 1 0 :1:0 
+[s S420 . 1 `uc 1 . 1 0 :1:0 
 `uc 1 nDONE 1 0 :1:1 
 ]
-[s S175 . 1 `uc 1 . 1 0 :1:0 
+[s S423 . 1 `uc 1 . 1 0 :1:0 
 `uc 1 GO_DONE 1 0 :1:1 
 ]
-[u S178 . 1 `S158 1 . 1 0 `S163 1 . 1 0 `S172 1 . 1 0 `S175 1 . 1 0 ]
-[v _ADCON0bits ADCON0bits `VES178  1 e 1 @31 ]
-[s S324 . 1 `uc 1 PS 1 0 :3:0 
+[u S426 . 1 `S406 1 . 1 0 `S411 1 . 1 0 `S420 1 . 1 0 `S423 1 . 1 0 ]
+[v _ADCON0bits ADCON0bits `VES426  1 e 1 @31 ]
+[s S265 . 1 `uc 1 PS 1 0 :3:0 
 `uc 1 PSA 1 0 :1:3 
 `uc 1 T0SE 1 0 :1:4 
 `uc 1 T0CS 1 0 :1:5 
@@ -130,13 +132,13 @@
 `uc 1 nRBPU 1 0 :1:7 
 ]
 "1367
-[s S331 . 1 `uc 1 PS0 1 0 :1:0 
+[s S272 . 1 `uc 1 PS0 1 0 :1:0 
 `uc 1 PS1 1 0 :1:1 
 `uc 1 PS2 1 0 :1:2 
 ]
-[u S335 . 1 `S324 1 . 1 0 `S331 1 . 1 0 ]
-[v _OPTION_REGbits OPTION_REGbits `VES335  1 e 1 @129 ]
-[s S384 . 1 `uc 1 TRISA0 1 0 :1:0 
+[u S276 . 1 `S265 1 . 1 0 `S272 1 . 1 0 ]
+[v _OPTION_REGbits OPTION_REGbits `VES276  1 e 1 @129 ]
+[s S325 . 1 `uc 1 TRISA0 1 0 :1:0 
 `uc 1 TRISA1 1 0 :1:1 
 `uc 1 TRISA2 1 0 :1:2 
 `uc 1 TRISA3 1 0 :1:3 
@@ -146,8 +148,8 @@
 `uc 1 TRISA7 1 0 :1:7 
 ]
 "1434
-[u S393 . 1 `S384 1 . 1 0 ]
-[v _TRISAbits TRISAbits `VES393  1 e 1 @133 ]
+[u S334 . 1 `S325 1 . 1 0 ]
+[v _TRISAbits TRISAbits `VES334  1 e 1 @133 ]
 "1479
 [v _TRISB TRISB `VEuc  1 e 1 @134 ]
 "1541
@@ -156,7 +158,7 @@
 [v _TRISD TRISD `VEuc  1 e 1 @136 ]
 "1665
 [v _TRISE TRISE `VEuc  1 e 1 @137 ]
-[s S435 . 1 `uc 1 TMR1IE 1 0 :1:0 
+[s S376 . 1 `uc 1 TMR1IE 1 0 :1:0 
 `uc 1 TMR2IE 1 0 :1:1 
 `uc 1 CCP1IE 1 0 :1:2 
 `uc 1 SSPIE 1 0 :1:3 
@@ -165,35 +167,35 @@
 `uc 1 ADIE 1 0 :1:6 
 ]
 "1719
-[u S443 . 1 `S435 1 . 1 0 ]
-[v _PIE1bits PIE1bits `VES443  1 e 1 @140 ]
-[s S269 . 1 `uc 1 SCS 1 0 :1:0 
+[u S384 . 1 `S376 1 . 1 0 ]
+[v _PIE1bits PIE1bits `VES384  1 e 1 @140 ]
+[s S210 . 1 `uc 1 SCS 1 0 :1:0 
 `uc 1 LTS 1 0 :1:1 
 `uc 1 HTS 1 0 :1:2 
 `uc 1 OSTS 1 0 :1:3 
 `uc 1 IRCF 1 0 :3:4 
 ]
 "1883
-[s S275 . 1 `uc 1 . 1 0 :4:0 
+[s S216 . 1 `uc 1 . 1 0 :4:0 
 `uc 1 IRCF0 1 0 :1:4 
 `uc 1 IRCF1 1 0 :1:5 
 `uc 1 IRCF2 1 0 :1:6 
 ]
-[u S280 . 1 `S269 1 . 1 0 `S275 1 . 1 0 ]
-[v _OSCCONbits OSCCONbits `VES280  1 e 1 @143 ]
+[u S221 . 1 `S210 1 . 1 0 `S216 1 . 1 0 ]
+[v _OSCCONbits OSCCONbits `VES221  1 e 1 @143 ]
 "2347
 [v _WPUB WPUB `VEuc  1 e 1 @149 ]
 "2417
 [v _IOCB IOCB `VEuc  1 e 1 @150 ]
-[s S491 . 1 `uc 1 . 1 0 :4:0 
+[s S452 . 1 `uc 1 . 1 0 :4:0 
 `uc 1 VCFG0 1 0 :1:4 
 `uc 1 VCFG1 1 0 :1:5 
 `uc 1 . 1 0 :1:6 
 `uc 1 ADFM 1 0 :1:7 
 ]
 "2992
-[u S497 . 1 `S491 1 . 1 0 ]
-[v _ADCON1bits ADCON1bits `VES497  1 e 1 @159 ]
+[u S458 . 1 `S452 1 . 1 0 ]
+[v _ADCON1bits ADCON1bits `VES458  1 e 1 @159 ]
 [s S136 . 1 `uc 1 ANS0 1 0 :1:0 
 `uc 1 ANS1 1 0 :1:1 
 `uc 1 ANS2 1 0 :1:2 
@@ -212,11 +214,11 @@
 [v _d1 d1 `i  1 e 2 0 ]
 "11
 [v _d2 d2 `i  1 e 2 0 ]
-"46 D:\Backup\Documentos\GitHub\ED2-Lab01\ED2-Lab01.X\main.c
+"47 D:\Backup\Documentos\GitHub\ED2-Lab01\ED2-Lab01.X\main.c
 [v _cont cont `i  1 e 2 0 ]
-"47
+"48
 [v _lecADC lecADC `i  1 e 2 0 ]
-"83
+"84
 [v _main main `(v  1 e 1 0 ]
 {
 "119
@@ -243,15 +245,21 @@
 [v setupINTOSC@IRCF IRCF `uc  1 a 1 0 ]
 "37
 } 0
+"31 D:\Backup\Documentos\GitHub\ED2-Lab01\ED2-Lab01.X\setupADC.c
+[v _iniciarADC iniciarADC `(v  1 e 1 0 ]
+{
+[v iniciarADC@channel channel `i  1 p 2 0 ]
+"37
+} 0
 "9 D:\Backup\Documentos\GitHub\ED2-Lab01\ED2-Lab01.X\confpuertos.c
 [v _configpuertos configpuertos `(v  1 e 1 0 ]
 {
 "29
 } 0
-"50 D:\Backup\Documentos\GitHub\ED2-Lab01\ED2-Lab01.X\main.c
+"51 D:\Backup\Documentos\GitHub\ED2-Lab01\ED2-Lab01.X\main.c
 [v _isr isr `II(v  1 e 1 0 ]
 {
-"81
+"82
 } 0
 "13 D:\Backup\Documentos\GitHub\ED2-Lab01\ED2-Lab01.X\display.c
 [v _display display `(i  1 e 2 0 ]
